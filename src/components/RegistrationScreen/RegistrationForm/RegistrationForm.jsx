@@ -1,37 +1,43 @@
-import React, { useEffect, useContext } from "react";
-import { Image, TextInput, TouchableOpacity, Text, View, Keyboard } from "react-native";
+import React, { useState } from "react";
+import { Image, Text, View, TouchableOpacity } from "react-native";
+import switchOffImage from "../../../images/add.png";
+import switchOnImage from "../../../images/addOrange.png";
 import userImage from "../../../images/userImage.png";
 import styles from "./RegistrationFormStyled";
-
-// Create a new context
-const KeyboardContext = React.createContext();
+import InputField from "../InputField/InputField";
+import Button from "../Button/Button";
 
 const RegistrationForm = () => {
-  const { keyboardDidShow, keyboardDidHide } = useContext(KeyboardContext);
-
-  useEffect(() => {
-    const keyboardDidShowListener = Keyboard.addListener("keyboardDidShow", keyboardDidShow);
-    const keyboardDidHideListener = Keyboard.addListener("keyboardDidHide", keyboardDidHide);
-
-    return () => {
-      keyboardDidShowListener.remove();
-      keyboardDidHideListener.remove();
-    };
-  }, [keyboardDidShow, keyboardDidHide]);
+  const [isReg, setIsReg] = useState(false);
+  const [isSwitchOff, setIsSwitchOff] = useState(false);
+  const toggleSwitch = () => setIsReg((previousState) => !previousState);
 
   return (
     <View style={styles.wrapper}>
-      <Image source={userImage} style={styles.userImage} />
-      <Text style={styles.title}>Реєстрація</Text>
-      <TextInput placeholder="Логін" style={styles.input} />
-      <TextInput placeholder="Адреса електронної пошти" style={styles.input} />
-      <TextInput placeholder="Пароль" style={styles.input} />
-      <TouchableOpacity
-        style={styles.button}
-        onPress={() => Alert.alert("Register Button pressed")}
-      >
-        <Text style={styles.buttonText}>Зареєструватися</Text>
+      {isReg ? (
+        <Image source={userImage} style={styles.userImage} />
+      ) : (
+        <View style={styles.placeholderImage} />
+      )}
+
+      <TouchableOpacity style={styles.switch} onPress={toggleSwitch}>
+        <Image
+          source={isSwitchOff ? switchOffImage : switchOnImage}
+          style={styles.switchImage}
+        />
       </TouchableOpacity>
+
+      <Text style={styles.title}>Реєстрація</Text>
+      <InputField placeholder="Логін" />
+      <InputField placeholder="Адреса електронної пошти" />
+      <InputField placeholder="Пароль" />
+      <TouchableOpacity style={styles.passwordText}>
+        <Text>Показати</Text>
+      </TouchableOpacity>
+      <Button
+        onPress={() => Alert.alert("Register Button pressed")}
+        title="Зареєструватися"
+      />
       <Text style={styles.text}>Вже є акаунт? Увійти</Text>
     </View>
   );
