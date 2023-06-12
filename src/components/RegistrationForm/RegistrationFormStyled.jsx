@@ -49,11 +49,6 @@ const styles = StyleSheet.create({
     paddingRight: 16,
     paddingLeft: 16,
   },
-  passwordText: {
-    position: "absolute",
-    left: 300,
-    top: 306,
-  },
   text: {
     color: "#1B4371",
     fontSize: 16,
@@ -62,6 +57,16 @@ const styles = StyleSheet.create({
     textAlign: "center",
     marginBottom: 32,
     marginTop: 16,
+  },
+  errorMessage: {
+    color: 'red',
+  },
+  passwordText: {
+    position: "absolute",
+    color: "#1B4371",
+    fontSize: 16,
+    right: 28,
+    top: 306,
   },
 });
 

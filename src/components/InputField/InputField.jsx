@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { TextInput } from "react-native";
 import styles from "./InputFieldStyled";
 
-const InputField = ({ placeholder }) => {
+const InputField = ({ secureTextEntry, placeholder, value, onChangeText }) => {
   const [isFocused, setIsFocused] = useState(false);
 
   const handleFocus = () => setIsFocused(true);
@@ -16,6 +16,9 @@ const InputField = ({ placeholder }) => {
       onFocus={handleFocus}
       onBlur={handleBlur}
       placeholder={placeholder}
+      secureTextEntry={secureTextEntry}   
+      value={value}
+      onChangeText={onChangeText}
     />
   );
 };

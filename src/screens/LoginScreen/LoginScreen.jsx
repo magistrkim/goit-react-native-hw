@@ -1,10 +1,10 @@
 import React from "react";
-import { ImageBackground, View, KeyboardAvoidingView } from "react-native";
+import { ImageBackground, KeyboardAvoidingView } from "react-native";
 import bcgImage from "../../images/photoBground.jpg";
-import RegistrationForm from "./RegistrationForm/RegistrationForm";
-import styles from "./RegistrationScreenStyled";
+import LoginForm from "../../components/LoginForm/LoginForm";
+import styles from "./LoginScreenStyled";
 
-const RegistrationScreen = () => {
+const LoginScreen = () => {
   return (
     <KeyboardAvoidingView style={styles.container} behavior="padding">
       <ImageBackground
@@ -12,10 +12,10 @@ const RegistrationScreen = () => {
         style={styles.image}
         resizeMode="cover"
       >
-        <RegistrationForm />
+        <LoginForm />
       </ImageBackground>
     </KeyboardAvoidingView>
   );
 };
 
-export default RegistrationScreen;
+export default LoginScreen;
