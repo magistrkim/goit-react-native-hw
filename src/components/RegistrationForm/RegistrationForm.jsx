@@ -16,28 +16,36 @@ const RegistrationForm = () => {
   const [loginText, setLoginText] = useState("");
   const [emailText, setEmailText] = useState("");
   const [passwordText, setPasswordText] = useState("");
-  const [loginError, setLoginError] = useState(false);
-  const [emailError, setEmailError] = useState(false);
-  const [passwordError, setPasswordError] = useState(false);
+  const [validation, setValidation] = useState({
+    login: { error: false, errorMessage: "" },
+    email: { error: false, errorMessage: "" },
+    password: { error: false, errorMessage: "" },
+  });
 
-  const handleSubmit = () => {
-    if (!loginText) {
-      setLoginError(true);
-      return;
-    } else if (!emailText) {
-      setEmailError(true);
-      return;
-    } else if (!passwordText) {
-      setPasswordError(true);
+  const handleValidation = () => {
+    const newValidation = {
+      login: {
+        error: !loginText.trim(),
+        errorMessage: "Login is a required field",
+      },
+      email: {
+        error: !emailText.trim(),
+        errorMessage: "Email is a required field",
+      },
+      password: {
+        error: !passwordText.trim(),
+        errorMessage: "Password is a required field",
+      },
+    };
+    setValidation(newValidation);
+
+    if (Object.values(newValidation).some((input) => input.error)) {
       return;
     }
 
     setLoginText("");
     setEmailText("");
     setPasswordText("");
-    setLoginError(false);
-    setEmailError(false);
-    setPasswordError(false);
   };
 
   const handlePasswordFocus = () => {
@@ -60,25 +68,24 @@ const RegistrationForm = () => {
       </TouchableOpacity>
 
       <Text style={styles.title}>Реєстрація</Text>
-      {loginError && (
-        <Text style={styles.errorMessage}>Login is a required field</Text>
+
+      {Object.values(validation).some((field) => field.error) && (
+        <Text style={styles.errorMessage}>
+          All fields are required to be filled
+        </Text>
       )}
+
       <InputField
         placeholder="Логін"
         value={loginText}
         onChangeText={setLoginText}
       />
-      {emailError && (
-        <Text style={styles.errorMessage}>Email is a required field</Text>
-      )}
+
       <InputField
         placeholder="Адреса електронної пошти"
         value={emailText}
         onChangeText={setEmailText}
       />
-      {passwordError && (
-        <Text style={styles.errorMessage}>Password is a required field</Text>
-      )}
 
       <InputField
         secureTextEntry={hidePassword}
@@ -87,6 +94,7 @@ const RegistrationForm = () => {
         onChangeText={setPasswordText}
         onFocus={handlePasswordFocus}
       />
+
       <TouchableOpacity
         style={styles.passwordText}
         onPress={() => {
@@ -96,7 +104,7 @@ const RegistrationForm = () => {
         <Text>{hidePassword ? "Показати" : "Приховати"}</Text>
       </TouchableOpacity>
 
-      <Button onPress={handleSubmit} title="Зареєструватися" />
+      <Button onPress={handleValidation} title="Зареєструватися" />
 
       <Text style={styles.text}>Вже є акаунт? Увійти</Text>
     </View>

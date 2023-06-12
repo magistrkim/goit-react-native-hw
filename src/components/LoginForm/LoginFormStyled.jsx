@@ -24,8 +24,14 @@ const styles = StyleSheet.create({
   },
   passwordText: {
     position: "absolute",
-    left: 300,
-    top: 306,
+    right: 30,
+    top: 180,
+  },
+  errorMessage: {
+    position: "absolute",
+    color: 'red',
+    left: 20,
+    top: 76,
   },
   text: {
     color: "#1B4371",
@@ -35,6 +41,9 @@ const styles = StyleSheet.create({
     textAlign: "center",
     marginBottom: 32,
     marginTop: 16,
+  },
+  textLink: {
+    textDecorationLine: "underline",
   },
 });
 

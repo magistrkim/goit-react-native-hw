@@ -5,8 +5,8 @@ import RegistrationScreen from "./src/screens/RegistrationScreen/RegistrationScr
 export default function App() {
   return (
     <>
-       <RegistrationScreen /> 
-      {/* <LoginScreen/> */}
+       {/* <RegistrationScreen />  */}
+      <LoginScreen/>
     </>
   );
 }

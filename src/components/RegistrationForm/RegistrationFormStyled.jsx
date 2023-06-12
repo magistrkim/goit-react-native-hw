@@ -59,7 +59,10 @@ const styles = StyleSheet.create({
     marginTop: 16,
   },
   errorMessage: {
+    position: "absolute",
     color: 'red',
+    left: 20,
+    top: 136,
   },
   passwordText: {
     position: "absolute",
