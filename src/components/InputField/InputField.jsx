@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import { TextInput } from "react-native";
-import styles from "./InputFieldStyled";
+import { TextInput, StyleSheet } from "react-native";
 
 const InputField = ({ secureTextEntry, placeholder, value, onChangeText }) => {
   const [isFocused, setIsFocused] = useState(false);
@@ -24,3 +23,29 @@ const InputField = ({ secureTextEntry, placeholder, value, onChangeText }) => {
 };
 
 export default InputField;
+
+const styles = StyleSheet.create({
+  input: {
+    position: "relative",
+    height: 48,
+    marginBottom: 16,
+    borderWidth: 1,
+    padding: 10,
+    backgroundColor: "#F6F6F6",
+    borderColor: "#E8E8E8",
+    borderRadius: 8,
+  },
+  inputFocused: {
+    backgroundColor: "#FFFFFF",
+    borderColor: "#FF6C00", 
+  },
+  text: {
+    color: "#1B4371",
+    fontSize: 16,
+    lineHeight: 19,
+    fontWeight: 400,
+    textAlign: "center",
+    marginBottom: 32,
+    marginTop: 16,
+  },
+});

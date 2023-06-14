@@ -1,9 +1,8 @@
 import React, { useState } from "react";
-import { Image, Text, View, TouchableOpacity } from "react-native";
+import { Image, Text, View, TouchableOpacity, StyleSheet } from "react-native";
 import switchOffImage from "../../../src/images/add.png";
 import switchOnImage from "../../../src/images/addOrange.png";
 import userImage from "../../../src/images/userImage.png";
-import styles from "./RegistrationFormStyled";
 import InputField from "../InputField/InputField";
 import Button from "../Button/Button";
 
@@ -101,7 +100,9 @@ const RegistrationForm = () => {
           setHidePassword(!hidePassword);
         }}
       >
-        <Text>{hidePassword ? "Показати" : "Приховати"}</Text>
+        <Text style={styles.showText}>
+          {hidePassword ? "Показати" : "Приховати"}
+        </Text>
       </TouchableOpacity>
 
       <Button onPress={handleValidation} title="Зареєструватися" />
@@ -112,3 +113,80 @@ const RegistrationForm = () => {
 };
 
 export default RegistrationForm;
+
+const styles = StyleSheet.create({
+  userImage: {
+    position: "relative",
+    left: 140,
+    top: -60,
+    position: "absolute",
+    width: 120,
+    height: 120,
+  },
+  placeholderImage: {
+    position: "relative",
+    left: 140,
+    top: -60,
+    position: "absolute",
+    width: 120,
+    height: 120,
+    borderRadius: 16,
+    backgroundColor: "#F6F6F6",
+  },
+  switch: {
+    position: "absolute",
+    left: 248,
+    top: 18,
+  },
+  image: {
+    height: 30,
+    width: 30,
+  },
+  title: {
+    color: "#212121",
+    fontSize: 30,
+    lineHeight: 35,
+    fontWeight: 500,
+    textAlign: "center",
+    marginBottom: 28,
+  },
+  wrapper: {
+    position: "relative",
+    flex: 1,
+    left: 0,
+    top: 200,
+    minHeight: 480,
+    backgroundColor: "#ffffff",
+    borderTopLeftRadius: 25,
+    borderTopRightRadius: 25,
+    paddingTop: 92,
+    paddingRight: 16,
+    paddingLeft: 16,
+  },
+  text: {
+    color: "#1B4371",
+    fontSize: 16,
+    lineHeight: 19,
+    fontWeight: 400,
+    textAlign: "center",
+    marginBottom: 32,
+    marginTop: 16,
+  },
+  errorMessage: {
+    position: "absolute",
+    color: "red",
+    left: 20,
+    top: 136,
+  },
+  passwordText: {
+    position: "absolute",
+    color: "#1B4371",
+    fontSize: 16,
+    lineHeight: 19,
+    right: 32,
+    top: 296,
+  },
+  showText: {
+    color: "#1B4371",
+  },
+});

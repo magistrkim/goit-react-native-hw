@@ -1,8 +1,11 @@
 import React from "react";
-import { ImageBackground, KeyboardAvoidingView } from "react-native";
+import {
+  ImageBackground,
+  KeyboardAvoidingView,
+  StyleSheet,
+} from "react-native";
 import bcgImage from "../../images/photoBground.jpg";
 import RegistrationForm from "../../components/RegistrationForm/RegistrationForm";
-import styles from "./RegistrationScreenStyled";
 
 const RegistrationScreen = () => {
   return (
@@ -17,5 +20,15 @@ const RegistrationScreen = () => {
     </KeyboardAvoidingView>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  image: {
+    flex: 1,
+    justifyContent: "center",
+  },
+});
 
 export default RegistrationScreen;

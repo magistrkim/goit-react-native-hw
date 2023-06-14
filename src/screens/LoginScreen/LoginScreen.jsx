@@ -1,8 +1,8 @@
 import React from "react";
-import { ImageBackground, KeyboardAvoidingView } from "react-native";
+import { ImageBackground, KeyboardAvoidingView, StyleSheet } from "react-native";
 import bcgImage from "../../images/photoBground.jpg";
 import LoginForm from "../../components/LoginForm/LoginForm";
-import styles from "./LoginScreenStyled";
+
 
 const LoginScreen = () => {
   return (
@@ -19,3 +19,14 @@ const LoginScreen = () => {
 };
 
 export default LoginScreen;
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  image: {
+    flex: 1,
+    justifyContent: "center",
+  },
+});
+

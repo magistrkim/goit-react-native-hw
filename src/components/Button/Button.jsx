@@ -1,6 +1,5 @@
 import React from "react";
-import { TouchableOpacity, Text } from "react-native";
-import styles from "./ButtonStyled";
+import { TouchableOpacity, Text, StyleSheet} from "react-native";
 
 const Button = ({ onPress, title }) => {
   return (
@@ -11,3 +10,21 @@ const Button = ({ onPress, title }) => {
 };
 
 export default Button;
+
+const styles = StyleSheet.create({
+  button: {
+    minHeight: 52,
+    marginTop: 24,
+    paddingVertical: 16,
+    paddingHorizontal: 32,
+    backgroundColor: "#FF6C00",
+    borderRadius: 50,
+  },
+  buttonText: {
+    color: "#FFFFFF",
+    textAlign: "center",
+    fontSize: 16,
+    lineHeight: 19,
+    fontWeight: 400,
+  },
+});
