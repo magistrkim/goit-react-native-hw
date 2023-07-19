@@ -86,24 +86,26 @@ const RegistrationForm = () => {
         onChangeText={setEmailText}
       />
 
-      <InputField
-        secureTextEntry={hidePassword}
-        placeholder="Пароль"
-        value={passwordText}
-        onChangeText={setPasswordText}
-        onFocus={handlePasswordFocus}
-      />
+      <View>
+        <InputField
+          secureTextEntry={hidePassword}
+          placeholder="Пароль"
+          value={passwordText}
+          onChangeText={setPasswordText}
+          onFocus={handlePasswordFocus}
+        />
 
-      <TouchableOpacity
-        style={styles.passwordText}
-        onPress={() => {
-          setHidePassword(!hidePassword);
-        }}
-      >
-        <Text style={styles.showText}>
-          {hidePassword ? "Показати" : "Приховати"}
-        </Text>
-      </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.passwordText}
+          onPress={() => {
+            setHidePassword(!hidePassword);
+          }}
+        >
+          <Text style={styles.showText}>
+            {hidePassword ? "Показати" : "Приховати"}
+          </Text>
+        </TouchableOpacity>
+      </View>
 
       <Button onPress={handleValidation} title="Зареєструватися" />
 
@@ -179,14 +181,15 @@ const styles = StyleSheet.create({
     top: 136,
   },
   passwordText: {
-    position: "absolute",
     color: "#1B4371",
     fontSize: 16,
     lineHeight: 19,
     right: 32,
-    top: 296,
   },
   showText: {
+    position: "absolute",
     color: "#1B4371",
+    right: -20,
+    top: -50,
   },
 });
