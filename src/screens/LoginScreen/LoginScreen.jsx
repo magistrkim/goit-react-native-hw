@@ -1,20 +1,25 @@
-import React from "react";
-import { ImageBackground, KeyboardAvoidingView, StyleSheet } from "react-native";
+import {
+  ImageBackground,
+  KeyboardAvoidingView,
+  StyleSheet,
+} from "react-native";
 import bcgImage from "../../images/photoBground.jpg";
 import LoginForm from "../../components/LoginForm/LoginForm";
 
-
 const LoginScreen = () => {
   return (
-    <KeyboardAvoidingView style={styles.container} behavior="padding">
-      <ImageBackground
-        source={bcgImage}
-        style={styles.image}
-        resizeMode="cover"
+    <ImageBackground
+      source={bcgImage}
+      style={styles.container}
+      resizeMode="cover"
+    >
+      <KeyboardAvoidingView
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+        style={styles.screenWrapper}
       >
         <LoginForm />
-      </ImageBackground>
-    </KeyboardAvoidingView>
+      </KeyboardAvoidingView>
+    </ImageBackground>
   );
 };
 
@@ -24,9 +29,9 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-  image: {
+  screenWrapper: {
     flex: 1,
-    justifyContent: "center",
+    width: "100%",
+    justifyContent: "flex-end",
   },
 });
-

@@ -1,5 +1,13 @@
 import React, { useState } from "react";
-import { Text, View, TouchableOpacity, StyleSheet } from "react-native";
+import {
+  Text,
+  View,
+  TouchableOpacity,
+  StyleSheet,
+  KeyboardAvoidingView,
+  TouchableWithoutFeedback,
+  Keyboard,
+} from "react-native";
 import InputField from "../../components/InputField/InputField";
 import Button from "../../components/Button/Button";
 
@@ -43,52 +51,70 @@ const LoginForm = ({ navigation }) => {
   };
 
   return (
-    <View style={styles.wrapper}>
-      <Text style={styles.title}>Увійти</Text>
-      {Object.values(validation).some((field) => field.error) && (
-        <Text style={styles.errorMessage}>
-          All fields are required to be filled
-        </Text>
-      )}
-      <InputField
-        placeholder="Адреса електронної пошти"
-        value={emailText}
-        onChangeText={setEmailText}
-      />
-
-      <InputField
-        secureTextEntry={hidePassword}
-        placeholder="Пароль"
-        value={passwordText}
-        onChangeText={setPasswordText}
-        onFocus={handlePasswordFocus}
-      />
-
-      <TouchableOpacity
-        style={styles.passwordText}
-        onPress={() => {
-          setHidePassword(!hidePassword);
-        }}
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      <KeyboardAvoidingView
+        style={styles.wrapper}
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
       >
-        <Text style={styles.showText}>
-          {hidePassword ? "Показати" : "Приховати"}
-        </Text>
-      </TouchableOpacity>
+        <Text style={styles.title}>Увійти</Text>
+        {Object.values(validation).some((field) => field.error) && (
+          <Text style={styles.errorMessage}>
+            All fields are required to be filled
+          </Text>
+        )}
+        <InputField
+          placeholder="Адреса електронної пошти"
+          value={emailText}
+          onChangeText={setEmailText}
+        />
 
-      <Button onPress={handleValidation} title="Увійти" />
+        <View>
+          <InputField
+            secureTextEntry={hidePassword}
+            placeholder="Пароль"
+            value={passwordText}
+            onChangeText={setPasswordText}
+            onFocus={handlePasswordFocus}
+          />
 
-      <TouchableOpacity onPress={onPressRegistration}>
-        <Text style={styles.text}>
-          Немає акаунту? <Text style={styles.textLink}>Зареєструватися</Text>
-        </Text>
-      </TouchableOpacity>
-    </View>
+          <TouchableOpacity
+            style={styles.passwordText}
+            onPress={() => {
+              setHidePassword(!hidePassword);
+            }}
+          >
+            <Text style={styles.showText}>
+              {hidePassword ? "Показати" : "Приховати"}
+            </Text>
+          </TouchableOpacity>
+          <Button onPress={handleValidation} title="Увійти" />
+
+          <TouchableOpacity onPress={onPressRegistration}>
+            <Text style={styles.text}>
+              Немає акаунту?{" "}
+              <Text style={styles.textLink}>Зареєструватися</Text>
+            </Text>
+          </TouchableOpacity>
+        </View>
+      </KeyboardAvoidingView>
+    </TouchableWithoutFeedback>
   );
 };
 
 export default LoginForm;
 
 const styles = StyleSheet.create({
+  wrapper: {
+    flex: 1,
+    position: "relative",
+    backgroundColor: "#ffffff",
+    borderTopLeftRadius: 25,
+    borderTopRightRadius: 25,
+    marginTop: 340,
+    paddingTop: 32,
+    paddingRight: 16,
+    paddingLeft: 16,
+  },
   title: {
     color: "#212121",
     fontSize: 30,
@@ -96,24 +122,6 @@ const styles = StyleSheet.create({
     fontWeight: 500,
     textAlign: "center",
     marginBottom: 32,
-  },
-  wrapper: {
-    position: "relative",
-    flex: 1,
-    left: 0,
-    top: 263,
-    minHeight: 380,
-    backgroundColor: "#ffffff",
-    borderTopLeftRadius: 25,
-    borderTopRightRadius: 25,
-    paddingTop: 32,
-    paddingRight: 16,
-    paddingLeft: 16,
-  },
-  passwordText: {
-    position: "absolute",
-    right: 30,
-    top: 180,
   },
   errorMessage: {
     position: "absolute",
@@ -133,7 +141,10 @@ const styles = StyleSheet.create({
   textLink: {
     textDecorationLine: "underline",
   },
-  showText: {
+  passwordText: {
+    position: "absolute",
     color: "#1B4371",
+    right: 16,
+    top: 14,
   },
 });
