@@ -52,7 +52,7 @@ const LoginForm = ({ navigation }) => {
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <KeyboardAvoidingView
+      <View
         style={styles.wrapper}
         behavior={Platform.OS === "ios" ? "padding" : "height"}
       >
@@ -96,7 +96,7 @@ const LoginForm = ({ navigation }) => {
             </Text>
           </TouchableOpacity>
         </View>
-      </KeyboardAvoidingView>
+      </View>
     </TouchableWithoutFeedback>
   );
 };
@@ -105,13 +105,13 @@ export default LoginForm;
 
 const styles = StyleSheet.create({
   wrapper: {
-    flex: 1,
     position: "relative",
+    alignItems: "center",
     backgroundColor: "#ffffff",
     borderTopLeftRadius: 25,
     borderTopRightRadius: 25,
-    marginTop: 340,
     paddingTop: 32,
+    paddingBottom: 144,
     paddingRight: 16,
     paddingLeft: 16,
   },
@@ -126,7 +126,7 @@ const styles = StyleSheet.create({
   errorMessage: {
     position: "absolute",
     color: "red",
-    left: 20,
+    left: 40,
     top: 76,
   },
   text: {
@@ -143,8 +143,10 @@ const styles = StyleSheet.create({
   },
   passwordText: {
     position: "absolute",
-    color: "#1B4371",
     right: 16,
     top: 14,
+  },
+  showText: {
+    color: "#1B4371",
   },
 });

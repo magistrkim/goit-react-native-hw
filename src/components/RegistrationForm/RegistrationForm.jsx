@@ -5,7 +5,6 @@ import {
   View,
   TouchableOpacity,
   StyleSheet,
-  KeyboardAvoidingView,
   TouchableWithoutFeedback,
   Keyboard,
 } from "react-native";
@@ -57,11 +56,11 @@ const RegistrationForm = () => {
   };
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <KeyboardAvoidingView
+      <View
         style={styles.wrapper}
         behavior={Platform.OS === "ios" ? "padding" : "height"}
       >
-        <View>
+        <View style={styles.imageWrapper}>
           {isReg ? (
             <Image source={userImage} style={styles.userImage} />
           ) : (
@@ -78,6 +77,7 @@ const RegistrationForm = () => {
           </Text>
         )}
         <InputField
+          style={styles.input}
           placeholder="Логін"
           value={loginText}
           onChangeText={setLoginText}
@@ -111,7 +111,7 @@ const RegistrationForm = () => {
             <Text style={styles.text}>Вже є акаунт? Увійти</Text>
           </TouchableOpacity>
         </View>
-      </KeyboardAvoidingView>
+      </View>
     </TouchableWithoutFeedback>
   );
 };
@@ -119,18 +119,22 @@ export default RegistrationForm;
 
 const styles = StyleSheet.create({
   wrapper: {
-    flex: 1,
+    position: "relative",
     backgroundColor: "#ffffff",
+    alignItems: "center",
     borderTopLeftRadius: 25,
     borderTopRightRadius: 25,
-    marginTop: 260,
     paddingTop: 92,
     paddingBottom: 78,
     paddingRight: 16,
     paddingLeft: 16,
   },
-  userImage: {
+  imageWrapper: {
     position: "absolute",
+    transform: [{ translateY: -60 }],
+    top: 0,
+  },
+  userImage: {
     left: 140,
     top: -150,
     width: 120,
@@ -138,9 +142,6 @@ const styles = StyleSheet.create({
     borderRadius: 16,
   },
   placeholderImage: {
-    position: "absolute",
-    left: 140,
-    top: -150,
     width: 120,
     height: 120,
     borderRadius: 16,
@@ -150,8 +151,10 @@ const styles = StyleSheet.create({
     position: "absolute",
     width: 25,
     height: 25,
-    right: 110,
-    top: -70,
+    right: 0,
+    top: "60%",
+    transform: [{ translateX: 12.5 }],
+    borderRadius: 25,
   },
   title: {
     color: "#212121",
@@ -173,11 +176,10 @@ const styles = StyleSheet.create({
   errorMessage: {
     position: "absolute",
     color: "red",
-    left: 20,
+    left: 40,
     top: 136,
   },
   passwordText: {
-    color: "#1B4371",
     fontSize: 16,
     lineHeight: 19,
     right: 32,
