@@ -3,8 +3,8 @@ import {
   KeyboardAvoidingView,
   StyleSheet,
 } from "react-native";
-import bcgImage from "../../images/photoBground.jpg";
-import LoginForm from "../../components/LoginForm/LoginForm";
+import bcgImage from "../images/photoBground.jpg";
+import LoginForm from "../components/LoginForm";
 
 const LoginScreen = () => {
   return (

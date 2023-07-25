@@ -4,12 +4,11 @@ import {
   View,
   TouchableOpacity,
   StyleSheet,
-  KeyboardAvoidingView,
   TouchableWithoutFeedback,
   Keyboard,
 } from "react-native";
-import InputField from "../../components/InputField/InputField";
-import Button from "../../components/Button/Button";
+import InputField from "./InputField";
+import Button from "./Button";
 
 const LoginForm = ({ navigation }) => {
   const [hidePassword, setHidePassword] = useState(true);
@@ -54,7 +53,6 @@ const LoginForm = ({ navigation }) => {
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <View
         style={styles.wrapper}
-        behavior={Platform.OS === "ios" ? "padding" : "height"}
       >
         <Text style={styles.title}>Увійти</Text>
         {Object.values(validation).some((field) => field.error) && (

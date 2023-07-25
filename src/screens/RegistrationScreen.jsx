@@ -5,8 +5,8 @@ import {
   KeyboardAvoidingView,
   Platform,
 } from "react-native";
-import bcgImage from "../../images/photoBground.jpg";
-import RegistrationForm from "../../components/RegistrationForm/RegistrationForm";
+import bcgImage from "../images/photoBground.jpg";
+import RegistrationForm from "../components/RegistrationForm";
 
 const RegistrationScreen = () => {
   return (

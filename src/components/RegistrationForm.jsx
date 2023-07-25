@@ -9,9 +9,9 @@ import {
   Keyboard,
 } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
-import userImage from "../../../src/images/userImage.png";
-import InputField from "../InputField/InputField";
-import Button from "../Button/Button";
+import userImage from "../images/userImage.png";
+import InputField from "./InputField";
+import Button from "./Button";
 
 const RegistrationForm = () => {
   const [isReg, setIsReg] = useState(false);
@@ -58,7 +58,6 @@ const RegistrationForm = () => {
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <View
         style={styles.wrapper}
-        behavior={Platform.OS === "ios" ? "padding" : "height"}
       >
         <View style={styles.imageWrapper}>
           {isReg ? (
