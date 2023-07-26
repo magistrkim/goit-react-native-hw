@@ -16,6 +16,7 @@ const LoginScreen = () => {
       <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "padding" : "height"}
         style={styles.screenWrapper}
+        keyboardVerticalOffset={-200}
       >
         <LoginForm />
       </KeyboardAvoidingView>

@@ -27,7 +27,7 @@ export default InputField;
 const styles = StyleSheet.create({
   input: {
     position: "relative",
-    width: 343,
+    minWidth: 374,
     height: 48,
     marginBottom: 16,
     borderWidth: 1,

@@ -15,16 +15,15 @@ const LoginForm = ({ navigation }) => {
   const [emailText, setEmailText] = useState("");
   const [passwordText, setPasswordText] = useState("");
   const [validation, setValidation] = useState({
-    login: { error: false, errorMessage: "" },
     email: { error: false, errorMessage: "" },
     password: { error: false, errorMessage: "" },
   });
-
+  const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
   const handleValidation = () => {
     const newValidation = {
       email: {
-        error: !emailText.trim(),
-        errorMessage: "Email is a required field",
+        error: !emailText.trim() || !emailRegex.test(emailText),
+        errorMessage: "Please enter a valid email address",
       },
       password: {
         error: !passwordText.trim(),
@@ -36,6 +35,12 @@ const LoginForm = ({ navigation }) => {
     if (Object.values(newValidation).some((input) => input.error)) {
       return;
     }
+
+    const submitData = {
+      emailText,
+      passwordText,
+    };
+    console.log(submitData);
 
     setEmailText("");
     setPasswordText("");
@@ -51,9 +56,7 @@ const LoginForm = ({ navigation }) => {
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <View
-        style={styles.wrapper}
-      >
+      <View style={styles.wrapper}>
         <Text style={styles.title}>Увійти</Text>
         {Object.values(validation).some((field) => field.error) && (
           <Text style={styles.errorMessage}>
