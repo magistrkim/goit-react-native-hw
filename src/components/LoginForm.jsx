@@ -69,7 +69,7 @@ const LoginForm = ({ navigation }) => {
           onChangeText={setEmailText}
         />
 
-        <View>
+        <View style={styles.inputWrapper}>
           <InputField
             secureTextEntry={hidePassword}
             placeholder="Пароль"
@@ -129,6 +129,9 @@ const styles = StyleSheet.create({
     color: "red",
     left: 40,
     top: 76,
+  },
+  inputWrapper: {
+    width: "100%",
   },
   text: {
     color: "#1B4371",

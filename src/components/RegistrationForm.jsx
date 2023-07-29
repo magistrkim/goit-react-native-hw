@@ -89,7 +89,7 @@ const RegistrationForm = () => {
           value={emailText}
           onChangeText={setEmailText}
         />
-        <View>
+        <View style={styles.inputWrapper}>
           <InputField
             secureTextEntry={hidePassword}
             placeholder="Пароль"
@@ -180,6 +180,9 @@ const styles = StyleSheet.create({
     color: "red",
     left: 40,
     top: 136,
+  },
+  inputWrapper: {
+    width: "100%",
   },
   passwordText: {
     fontSize: 16,
