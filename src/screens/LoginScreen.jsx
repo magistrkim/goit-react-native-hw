@@ -2,6 +2,8 @@ import {
   ImageBackground,
   KeyboardAvoidingView,
   StyleSheet,
+  TouchableWithoutFeedback,
+  Keyboard,
 } from "react-native";
 import bcgImage from "../images/photoBground.jpg";
 import LoginForm from "../components/LoginForm";
@@ -13,13 +15,15 @@ const LoginScreen = () => {
       style={styles.container}
       resizeMode="cover"
     >
-      <KeyboardAvoidingView
-        behavior={Platform.OS === "ios" ? "padding" : "height"}
-        style={styles.screenWrapper}
-        keyboardVerticalOffset={-200}
-      >
-        <LoginForm />
-      </KeyboardAvoidingView>
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <KeyboardAvoidingView
+          behavior={Platform.OS === "ios" ? "padding" : "height"}
+          style={styles.screenWrapper}
+          keyboardVerticalOffset={-200}
+        >
+          <LoginForm />
+        </KeyboardAvoidingView>
+      </TouchableWithoutFeedback>
     </ImageBackground>
   );
 };

@@ -12,12 +12,12 @@ import RegistrationForm from "../components/RegistrationForm";
 
 const RegistrationScreen = () => {
   return (
-    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <ImageBackground
-        source={bcgImage}
-        style={styles.container}
-        resizeMode="cover"
-      >
+    <ImageBackground
+      source={bcgImage}
+      style={styles.container}
+      resizeMode="cover"
+    >
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <KeyboardAvoidingView
           behavior={Platform.OS === "ios" ? "padding" : "height"}
           style={styles.screenWrapper}
@@ -25,8 +25,8 @@ const RegistrationScreen = () => {
         >
           <RegistrationForm />
         </KeyboardAvoidingView>
-      </ImageBackground>
-    </TouchableWithoutFeedback>
+      </TouchableWithoutFeedback>
+    </ImageBackground>
   );
 };
 

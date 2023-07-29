@@ -130,7 +130,7 @@ const styles = StyleSheet.create({
     left: 40,
     top: 76,
   },
-  inputWrapper: {
+    inputWrapper: {
     width: "100%",
   },
   text: {
