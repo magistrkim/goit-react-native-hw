@@ -7,7 +7,7 @@ import {
   Keyboard,
 } from "react-native";
 
-const PostsScreen = () => {
+const CreatePostsScreen = () => {
   return (
     <View>
       <Text>PostsScreen</Text>
@@ -15,4 +15,4 @@ const PostsScreen = () => {
   );
 };
 
-export default PostsScreen;
+export default CreatePostsScreen;

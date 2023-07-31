@@ -8,6 +8,7 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
 } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 import { AntDesign } from "@expo/vector-icons";
 import userImage from "../images/userImage.png";
 import InputField from "./InputField";
@@ -19,25 +20,72 @@ const RegistrationForm = () => {
   const [loginText, setLoginText] = useState("");
   const [emailText, setEmailText] = useState("");
   const [passwordText, setPasswordText] = useState("");
+  const navigation = useNavigation();
   const [validation, setValidation] = useState({
     login: { error: false, errorMessage: "" },
     email: { error: false, errorMessage: "" },
     password: { error: false, errorMessage: "" },
   });
   const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-  const handleValidation = () => {
+
+  const handleLoginChange = (text) => {
+    setLoginText(text);
+    setValidation((prevState) => ({
+      ...prevState,
+      login: {
+        ...prevState.login,
+        error: false,
+        errorMessage: "",
+      },
+    }));
+  };
+
+  const handleEmailChange = (text) => {
+    setEmailText(text);
+    setValidation((prevState) => ({
+      ...prevState,
+      email: {
+        ...prevState.email,
+        error: !text.trim() || !emailRegex.test(text),
+        errorMessage: !text.trim()
+          ? "Please enter a valid email address"
+          : !emailRegex.test(text)
+          ? "Email is not valid"
+          : "",
+      },
+    }));
+  };
+
+  const handlePasswordChange = (text) => {
+    setPasswordText(text);
+    setValidation((prevState) => ({
+      ...prevState,
+      password: {
+        ...prevState.password,
+        error: false,
+        errorMessage: "",
+      },
+    }));
+  };
+  const handleSubmit = () => {
     const newValidation = {
       login: {
         error: !loginText.trim(),
-        errorMessage: "Login is a required field",
+        errorMessage: !loginText.trim() ? "Login is a required field" : "",
       },
       email: {
         error: !emailText.trim() || !emailRegex.test(emailText),
-        errorMessage: "Please enter a valid email address",
+        errorMessage: !emailText.trim()
+          ? "Please enter a valid email address"
+          : !emailRegex.test(emailText)
+          ? "Email is not valid"
+          : "",
       },
       password: {
         error: !passwordText.trim(),
-        errorMessage: "Password is a required field",
+        errorMessage: !passwordText.trim()
+          ? "Password is a required field"
+          : "",
       },
     };
     setValidation(newValidation);
@@ -45,6 +93,7 @@ const RegistrationForm = () => {
     if (Object.values(newValidation).some((input) => input.error)) {
       return;
     }
+
     const submitData = {
       loginText,
       emailText,
@@ -55,11 +104,18 @@ const RegistrationForm = () => {
     setLoginText("");
     setEmailText("");
     setPasswordText("");
+    
+    navigation.navigate("Home");
   };
 
   const handlePasswordFocus = () => {
     setHidePassword(true);
   };
+
+  const onPressLogin = () => {
+    navigation.navigate("Login");
+  };
+
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <View style={styles.wrapper}>
@@ -82,20 +138,29 @@ const RegistrationForm = () => {
         <InputField
           placeholder="Логін"
           value={loginText}
-          onChangeText={setLoginText}
+          onChangeText={handleLoginChange}
+          errorMessage={
+            validation.login.error ? validation.login.errorMessage : ""
+          }
         />
         <InputField
           placeholder="Адреса електронної пошти"
           value={emailText}
-          onChangeText={setEmailText}
+          onChangeText={handleEmailChange}
+          errorMessage={
+            validation.email.error ? validation.email.errorMessage : ""
+          }
         />
         <View style={styles.inputWrapper}>
           <InputField
             secureTextEntry={hidePassword}
             placeholder="Пароль"
             value={passwordText}
-            onChangeText={setPasswordText}
+            onChangeText={handlePasswordChange}
             onFocus={handlePasswordFocus}
+            errorMessage={
+              validation.password.error ? validation.password.errorMessage : ""
+            }
           />
 
           <TouchableOpacity
@@ -108,8 +173,8 @@ const RegistrationForm = () => {
               {hidePassword ? "Показати" : "Приховати"}
             </Text>
           </TouchableOpacity>
-          <Button onPress={handleValidation} title="Зареєструватися" />
-          <TouchableOpacity onPress={() => {}}>
+          <Button onPress={handleSubmit} title="Зареєструватися" />
+          <TouchableOpacity onPress={onPressLogin}>
             <Text style={styles.text}>Вже є акаунт? Увійти</Text>
           </TouchableOpacity>
         </View>

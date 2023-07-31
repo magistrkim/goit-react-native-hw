@@ -7,12 +7,12 @@ import {
   Keyboard,
 } from "react-native";
 
-const PostsScreen = () => {
+const CommentsScreen = () => {
   return (
     <View>
-      <Text>PostsScreen</Text>
+      <Text>CommentsScreen</Text>
     </View>
   );
 };
 
-export default PostsScreen;
+export default CommentsScreen;
