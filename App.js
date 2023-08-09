@@ -27,14 +27,29 @@ export default function App() {
   }
   return (
     <NavigationContainer>
-      <MainStack.Navigator initialRouteName="Login">
+      <MainStack.Navigator
+        initialRouteName="Login"
+        screenOptions={{ headerShown: false }}
+      >
         <MainStack.Screen name="Registration" component={RegistrationScreen} />
         <MainStack.Screen name="Login" component={LoginScreen} />
-        <MainStack.Screen name="Home" component={PostsScreen} />
+        <MainStack.Screen
+          name="Публікації"
+          component={PostsScreen}
+          options={{ headerShown: true }}
+        />
         {/* <CreatePostsScreen />
-        <CommentsScreen />
+        <MainStack.Screen
+          name="Comments"
+          component={CommentsScreen}
+          options={{ headerShown: true }}
+        />
         <ProfileScreen />
-        <MapsScreen />
+        <MainStack.Screen
+          name="Maps"
+          component={MapsScreen}
+          options={{ headerShown: true }}
+        />
         <HomeScreen /> */}
       </MainStack.Navigator>
     </NavigationContainer>

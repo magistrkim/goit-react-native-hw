@@ -15,73 +15,35 @@ const LoginForm = () => {
   const [hidePassword, setHidePassword] = useState(true);
   const [emailText, setEmailText] = useState("");
   const [passwordText, setPasswordText] = useState("");
-  const [validation, setValidation] = useState({
-    email: { error: false, errorMessage: "" },
-    password: { error: false, errorMessage: "" },
+  const [errors, setErrors] = useState({
+    emailText: false,
+    passwordText: false,
   });
   const navigation = useNavigation();
+
+  const submitData = {
+    emailText,
+    passwordText,
+  };
   const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
-  const handleEmailChange = (text) => {
-    setEmailText(text);
-    setValidation((prevState) => ({
-      ...prevState,
-      email: {
-        ...prevState.email,
-        error: !text.trim() || !emailRegex.test(text),
-        errorMessage: !text.trim()
-          ? "Please enter a valid email address"
-          : !emailRegex.test(text)
-          ? "Email is not valid"
-          : "",
-      },
-    }));
-  };
-
-  const handlePasswordChange = (text) => {
-    setPasswordText(text);
-    setValidation((prevState) => ({
-      ...prevState,
-      password: {
-        ...prevState.password,
-        error: false,
-        errorMessage: "",
-      },
-    }));
-  };
   const handleSubmit = () => {
-    const newValidation = {
-      email: {
-        error: !emailText.trim() || !emailRegex.test(emailText),
-        errorMessage: !emailText.trim()
-          ? "Please enter a valid email address"
-          : !emailRegex.test(emailText)
-          ? "Email is not valid"
-          : "",
-      },
-      password: {
-        error: !passwordText.trim(),
-        errorMessage: !passwordText.trim()
-          ? "Password is a required field"
-          : "",
-      },
-    };
-    setValidation(newValidation);
-
-    if (Object.values(newValidation).some((input) => input.error)) {
+    if (!emailText) {
+      setErrors((prevState) => ({ ...prevState, emailText: true }));
+      return;
+    } else if (!emailRegex.test(emailText)) {
+      setErrors((prevState) => ({ ...prevState, emailText: true }));
+      return;
+    } else if (!passwordText) {
+      setErrors((prevState) => ({ ...prevState, passwordText: true }));
       return;
     }
-
-    const submitData = {
-      emailText,
-      passwordText,
-    };
     console.log(submitData);
 
     setEmailText("");
     setPasswordText("");
 
-    navigation.navigate("Home");
+    navigation.navigate("Публікації");
   };
 
   const handlePasswordFocus = () => {
@@ -96,30 +58,36 @@ const LoginForm = () => {
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <View style={styles.wrapper}>
         <Text style={styles.title}>Увійти</Text>
-        {Object.values(validation).some((field) => field.error) && (
+        {errors.emailText && (
           <Text style={styles.errorMessage}>
-            All fields are required to be filled
+            Please enter the correct email
           </Text>
         )}
         <InputField
           placeholder="Адреса електронної пошти"
           value={emailText}
-          onChangeText={handleEmailChange}
-          errorMessage={
-            validation.email.error ? validation.email.errorMessage : ""
-          }
+          onChangeText={(text) => {
+            setEmailText(text);
+            setErrors((prevState) => ({ ...prevState, emailText: false }));
+          }}
+          onBlur={() => {
+            setFocusedInput(null);
+          }}
         />
 
+        {errors.passwordText && (
+          <Text style={styles.errorMessage}>Password is a required field</Text>
+        )}
         <View style={styles.inputWrapper}>
           <InputField
             secureTextEntry={hidePassword}
             placeholder="Пароль"
             value={passwordText}
-            onChangeText={handlePasswordChange}
+            onChangeText={(text) => {
+              setPasswordText(text);
+              setErrors((prevState) => ({ ...prevState, passwordText: false }));
+            }}
             onFocus={handlePasswordFocus}
-            errorMessage={
-              validation.password.error ? validation.password.errorMessage : ""
-            }
           />
 
           <TouchableOpacity
@@ -169,10 +137,8 @@ const styles = StyleSheet.create({
     marginBottom: 32,
   },
   errorMessage: {
-    position: "absolute",
-    color: "red",
-    left: 40,
-    top: 76,
+    color: "#FF6C00",
+    marginBottom: 4,
   },
   inputWrapper: {
     width: "100%",
