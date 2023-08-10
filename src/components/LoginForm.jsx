@@ -4,8 +4,6 @@ import {
   View,
   TouchableOpacity,
   StyleSheet,
-  TouchableWithoutFeedback,
-  Keyboard,
 } from "react-native";
 import InputField from "./InputField";
 import Button from "./Button";
@@ -55,62 +53,57 @@ const LoginForm = () => {
   };
 
   return (
-    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <View style={styles.wrapper}>
-        <Text style={styles.title}>Увійти</Text>
-        {errors.emailText && (
-          <Text style={styles.errorMessage}>
-            Please enter the correct email
-          </Text>
-        )}
+    <View style={styles.wrapper}>
+      <Text style={styles.title}>Увійти</Text>
+      {errors.emailText && (
+        <Text style={styles.errorMessage}>Please enter the correct email</Text>
+      )}
+      <InputField
+        placeholder="Адреса електронної пошти"
+        value={emailText}
+        onChangeText={(text) => {
+          setEmailText(text);
+          setErrors((prevState) => ({ ...prevState, emailText: false }));
+        }}
+        onBlur={() => {
+          setFocusedInput(null);
+        }}
+      />
+
+      {errors.passwordText && (
+        <Text style={styles.errorMessage}>Password is a required field</Text>
+      )}
+      <View style={styles.inputWrapper}>
         <InputField
-          placeholder="Адреса електронної пошти"
-          value={emailText}
+          secureTextEntry={hidePassword}
+          placeholder="Пароль"
+          value={passwordText}
           onChangeText={(text) => {
-            setEmailText(text);
-            setErrors((prevState) => ({ ...prevState, emailText: false }));
+            setPasswordText(text);
+            setErrors((prevState) => ({ ...prevState, passwordText: false }));
           }}
-          onBlur={() => {
-            setFocusedInput(null);
-          }}
+          onFocus={handlePasswordFocus}
         />
 
-        {errors.passwordText && (
-          <Text style={styles.errorMessage}>Password is a required field</Text>
-        )}
-        <View style={styles.inputWrapper}>
-          <InputField
-            secureTextEntry={hidePassword}
-            placeholder="Пароль"
-            value={passwordText}
-            onChangeText={(text) => {
-              setPasswordText(text);
-              setErrors((prevState) => ({ ...prevState, passwordText: false }));
-            }}
-            onFocus={handlePasswordFocus}
-          />
+        <TouchableOpacity
+          style={styles.passwordText}
+          onPress={() => {
+            setHidePassword(!hidePassword);
+          }}
+        >
+          <Text style={styles.showText}>
+            {hidePassword ? "Показати" : "Приховати"}
+          </Text>
+        </TouchableOpacity>
+        <Button onPress={handleSubmit} title="Увійти" />
 
-          <TouchableOpacity
-            style={styles.passwordText}
-            onPress={() => {
-              setHidePassword(!hidePassword);
-            }}
-          >
-            <Text style={styles.showText}>
-              {hidePassword ? "Показати" : "Приховати"}
-            </Text>
-          </TouchableOpacity>
-          <Button onPress={handleSubmit} title="Увійти" />
-
-          <TouchableOpacity onPress={onPressRegistration}>
-            <Text style={styles.text}>
-              Немає акаунту?{" "}
-              <Text style={styles.textLink}>Зареєструватися</Text>
-            </Text>
-          </TouchableOpacity>
-        </View>
+        <TouchableOpacity onPress={onPressRegistration}>
+          <Text style={styles.text}>
+            Немає акаунту? <Text style={styles.textLink}>Зареєструватися</Text>
+          </Text>
+        </TouchableOpacity>
       </View>
-    </TouchableWithoutFeedback>
+    </View>
   );
 };
 
@@ -125,8 +118,7 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 25,
     paddingTop: 32,
     paddingBottom: 144,
-    paddingRight: 16,
-    paddingLeft: 16,
+    paddingHorizontal: 16,
   },
   title: {
     color: "#212121",

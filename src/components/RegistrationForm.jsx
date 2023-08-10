@@ -1,13 +1,5 @@
 import { useState } from "react";
-import {
-  Image,
-  Text,
-  View,
-  TouchableOpacity,
-  StyleSheet,
-  TouchableWithoutFeedback,
-  Keyboard,
-} from "react-native";
+import { Image, Text, View, TouchableOpacity, StyleSheet } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { AntDesign } from "@expo/vector-icons";
 import userImage from "../images/userImage.png";
@@ -67,76 +59,72 @@ const RegistrationForm = () => {
   };
 
   return (
-    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <View style={styles.wrapper}>
-        <View style={styles.imageWrapper}>
-          <Image /*source={userImage}*/ style={styles.placeholderImage} />
-          <TouchableOpacity style={styles.addImageBtn}>
-            <AntDesign size={25} color="#FF6C00" name="pluscircleo" />
-          </TouchableOpacity>
-        </View>
-        <Text style={styles.title}>Реєстрація</Text>
-        {errors.loginText && (
-          <Text style={styles.errorMessage}>Login is a required field</Text>
-        )}
-        <InputField
-          placeholder="Логін"
-          value={loginText}
-          onChangeText={(text) => {
-            setLoginText(text);
-            setErrors((prevState) => ({ ...prevState, loginText: false }));
-          }}
-          onBlur={() => {
-            setFocusedInput(null);
-          }}
-        />
-        {errors.emailText && (
-          <Text style={styles.errorMessage}>
-            Please enter the correct email
-          </Text>
-        )}
-        <InputField
-          placeholder="Адреса електронної пошти"
-          value={emailText}
-          onChangeText={(text) => {
-            setEmailText(text);
-            setErrors((prevState) => ({ ...prevState, emailText: false }));
-          }}
-          onBlur={() => {
-            setFocusedInput(null);
-          }}
-        />
-        {errors.passwordText && (
-          <Text style={styles.errorMessage}>Password is a required field</Text>
-        )}
-        <View style={styles.inputWrapper}>
-          <InputField
-            secureTextEntry={hidePassword}
-            placeholder="Пароль"
-            value={passwordText}
-            onChangeText={(text) => {
-              setPasswordText(text);
-              setErrors((prevState) => ({ ...prevState, passwordText: false }));
-            }}
-            onFocus={handlePasswordFocus}
-          />
-          <TouchableOpacity
-            style={styles.passwordText}
-            onPress={() => {
-              setHidePassword(!hidePassword);
-            }}
-          >
-            <Text style={styles.showText}>
-              {hidePassword ? "Показати" : "Приховати"}
-            </Text>
-          </TouchableOpacity>
-          <Button onPress={handleSubmit} title="Зареєструватися" />
-          <TouchableOpacity onPress={onPressLogin}>
-            <Text style={styles.text}>Вже є акаунт? Увійти</Text>
-          </TouchableOpacity>
-        </View>
+    <View style={styles.wrapper}>
+      <View style={styles.imageWrapper}>
+        <Image /*source={userImage}*/ style={styles.placeholderImage} />
+        <TouchableOpacity style={styles.addImageBtn}>
+          <AntDesign size={25} color="#FF6C00" name="pluscircleo" />
+        </TouchableOpacity>
       </View>
-    </TouchableWithoutFeedback>
+      <Text style={styles.title}>Реєстрація</Text>
+      {errors.loginText && (
+        <Text style={styles.errorMessage}>Login is a required field</Text>
+      )}
+      <InputField
+        placeholder="Логін"
+        value={loginText}
+        onChangeText={(text) => {
+          setLoginText(text);
+          setErrors((prevState) => ({ ...prevState, loginText: false }));
+        }}
+        onBlur={() => {
+          setFocusedInput(null);
+        }}
+      />
+      {errors.emailText && (
+        <Text style={styles.errorMessage}>Please enter the correct email</Text>
+      )}
+      <InputField
+        placeholder="Адреса електронної пошти"
+        value={emailText}
+        onChangeText={(text) => {
+          setEmailText(text);
+          setErrors((prevState) => ({ ...prevState, emailText: false }));
+        }}
+        onBlur={() => {
+          setFocusedInput(null);
+        }}
+      />
+      {errors.passwordText && (
+        <Text style={styles.errorMessage}>Password is a required field</Text>
+      )}
+      <View style={styles.inputWrapper}>
+        <InputField
+          secureTextEntry={hidePassword}
+          placeholder="Пароль"
+          value={passwordText}
+          onChangeText={(text) => {
+            setPasswordText(text);
+            setErrors((prevState) => ({ ...prevState, passwordText: false }));
+          }}
+          onFocus={handlePasswordFocus}
+        />
+        <TouchableOpacity
+          style={styles.passwordText}
+          onPress={() => {
+            setHidePassword(!hidePassword);
+          }}
+        >
+          <Text style={styles.showText}>
+            {hidePassword ? "Показати" : "Приховати"}
+          </Text>
+        </TouchableOpacity>
+        <Button onPress={handleSubmit} title="Зареєструватися" />
+        <TouchableOpacity onPress={onPressLogin}>
+          <Text style={styles.text}>Вже є акаунт? Увійти</Text>
+        </TouchableOpacity>
+      </View>
+    </View>
   );
 };
 export default RegistrationForm;
@@ -150,8 +138,7 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 25,
     paddingTop: 92,
     paddingBottom: 78,
-    paddingRight: 16,
-    paddingLeft: 16,
+    paddingHorizontal: 16,
   },
   imageWrapper: {
     position: "absolute",
