@@ -10,7 +10,7 @@ import {
 const CreatePostsScreen = () => {
   return (
     <View>
-      <Text>PostsScreen</Text>
+      <Text>CreatePostsScreen</Text>
     </View>
   );
 };
