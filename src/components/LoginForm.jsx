@@ -41,7 +41,7 @@ const LoginForm = () => {
     setEmailText("");
     setPasswordText("");
 
-    navigation.navigate("Публікації");
+    navigation.navigate("BottomTabNavigation");
   };
 
   const handlePasswordFocus = () => {
