@@ -9,10 +9,19 @@ import {
 
 const MapsScreen = () => {
   return (
-    <View>
+    <View style={styles.container}>
       <Text>MapsScreen</Text>
     </View>
   );
 };
 
 export default MapsScreen;
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#ffffff",
+    paddingVertical: 32,
+    paddingHorizontal: 16,
+  },
+});
