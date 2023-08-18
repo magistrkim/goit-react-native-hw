@@ -15,7 +15,7 @@ const AppNavigation = ({ navigation }) => {
     <NavigationContainer>
       <MainStack.Navigator
         initialRouteName="Login"
-        screenOptions={{ headerShown: false }}
+        screenOptions={{ headerShown: false, headerTitleAlign: "center" }}
       >
         <MainStack.Screen name="Registration" component={RegistrationScreen} />
         <MainStack.Screen name="Login" component={LoginScreen} />

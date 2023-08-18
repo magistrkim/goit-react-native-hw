@@ -109,7 +109,7 @@ const styles = StyleSheet.create({
     width: 60,
     height: 60,
     backgroundColor: "#FFFFFF",
-    borderRadius: "50%",
+    borderRadius: 30,
     transform: [{ translateX: -30 }, { translateY: -30 }],
   },
   cameraIcon: {
@@ -151,7 +151,7 @@ const styles = StyleSheet.create({
     paddingTop: 16,
     paddingBottom: 16,
     backgroundColor: "#F6F6F6",
-    borderRadius: "30",
+    borderRadius: 30,
     alignItems: "center",
   },
   enableBtn: {

@@ -17,6 +17,7 @@ const BottomTabNavigation = () => {
     <Tabs.Navigator
       initialRouteName="PostsScreen"
       screenOptions={{
+        headerTitleAlign: "center",
         tabBarShowLabel: false,
         tabBarStyle: {
           height: 84,
