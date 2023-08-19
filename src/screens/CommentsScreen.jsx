@@ -12,7 +12,8 @@ const CommentsScreen = () => {
   return (
     <View style={styles.container}>
       <View style={styles.imageWrapper}>
-        <Image style={styles.image}/>
+        <Image style={styles.image} />
+        <Text>Comments Screen</Text>
       </View>
     </View>
   );

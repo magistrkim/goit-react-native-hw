@@ -2,7 +2,6 @@ import { useState } from "react";
 import { Image, Text, View, TouchableOpacity, StyleSheet } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { AntDesign } from "@expo/vector-icons";
-import userImage from "../images/userImage.png";
 import InputField from "./InputField";
 import Button from "./Button";
 

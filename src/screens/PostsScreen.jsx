@@ -1,15 +1,8 @@
 import React from "react";
 import userImage from "../images/userImage.png";
-import {
-  View,
-  Text,
-  FlatList,
-  Image,
-  KeyboardAvoidingView,
-  StyleSheet,
-  TouchableWithoutFeedback,
-  Keyboard,
-} from "react-native";
+import { View, Text, FlatList, Image, StyleSheet } from "react-native";
+import Post from "../components/Post";
+import posts from "../shared/postsData.js";
 
 const PostsScreen = () => {
   return (
@@ -27,7 +20,10 @@ const PostsScreen = () => {
           </View>
         </>
       }
-    ></FlatList>
+      data={posts}
+      renderItem={({ item }) => <Post item={item} />}
+      keyExtractor={(item) => item.id}
+    />
   );
 };
 
