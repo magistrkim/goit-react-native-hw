@@ -8,7 +8,6 @@ import {
   StyleSheet,
   Image,
   TouchableOpacity,
-  ScrollView,
 } from "react-native";
 // import LogoutButton from "../components/LogoutButton";
 import userImage from "../images/userImage.png";
@@ -24,37 +23,37 @@ const ProfileScreen = () => {
     navigation.navigate("Login");
   };
   return (
-    <ScrollView style={{ flex: 1 }} showsVerticalScrollIndicator={false}>
-      <ImageBackground
-        source={bcgImage}
-        style={styles.container}
-        resizeMode="cover"
-      >
-        <View style={styles.wrapper}>
-          <View style={styles.imageWrapper}>
-            <Image source={userImage} style={styles.placeholderImage} />
-            <TouchableOpacity style={styles.addImageBtn}>
-              <AntDesign
-                size={25}
-                color="#E8E8E8"
-                name="pluscircleo"
-                style={{ transform: [{ rotate: "45deg" }] }}
-              />
-            </TouchableOpacity>
-          </View>
-          <TouchableOpacity style={styles.logoutBtn} onPress={onPressLogin}>
-            <MaterialIcons name="logout" size={24} color="#BDBDBD" />
+    <ImageBackground
+      source={bcgImage}
+      style={styles.container}
+      resizeMode="cover"
+    >
+      <View style={styles.wrapper}>
+        <View style={styles.imageWrapper}>
+          <Image source={userImage} style={styles.placeholderImage} />
+          <TouchableOpacity style={styles.addImageBtn}>
+            <AntDesign
+              size={25}
+              color="#E8E8E8"
+              name="pluscircleo"
+              style={{ transform: [{ rotate: "45deg" }] }}
+            />
           </TouchableOpacity>
-          {/* <LogoutButton style={styles.logoutBtn} /> */}
-          <Text style={styles.title}>Nataliya Kim</Text>
-          <View style={styles.postsList}>
-            {posts.map((item) => (
-              <ProfilePost item={item} key={item.id} />
-            ))}
-          </View>
         </View>
-      </ImageBackground>
-    </ScrollView>
+        <TouchableOpacity style={styles.logoutBtn} onPress={onPressLogin}>
+          <MaterialIcons name="logout" size={24} color="#BDBDBD" />
+        </TouchableOpacity>
+        {/* <LogoutButton style={styles.logoutBtn} /> */}
+        <Text style={styles.title}>Nataliya Kim</Text>
+        <FlatList
+          style={styles.postsList}
+          showsVerticalScrollIndicator={false}
+          data={posts}
+          renderItem={({ item }) => <ProfilePost item={item} />}
+          keyExtractor={(item) => item.id}
+        />
+      </View>
+    </ImageBackground>
   );
 };
 
@@ -68,6 +67,7 @@ const styles = StyleSheet.create({
     paddingTop: 200,
   },
   wrapper: {
+    flex: 1,
     width: "100%",
     position: "relative",
     backgroundColor: "#ffffff",

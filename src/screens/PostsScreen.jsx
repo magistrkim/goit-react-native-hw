@@ -6,24 +6,22 @@ import posts from "../shared/postsData.js";
 
 const PostsScreen = () => {
   return (
-    <FlatList
-      style={styles.container}
-      showsVerticalScrollIndicator={false}
-      ListHeaderComponent={
-        <>
-          <View style={styles.userWrapper}>
-            <Image source={userImage} style={styles.userImage} />
-            <View>
-              <Text style={styles.userName}>Kim Nataliya</Text>
-              <Text style={styles.userEmail}>kim@gmail.com</Text>
-            </View>
-          </View>
-        </>
-      }
-      data={posts}
-      renderItem={({ item }) => <Post item={item} />}
-      keyExtractor={(item) => item.id}
-    />
+    <View style={styles.container}>
+      <View style={styles.userWrapper}>
+        <Image source={userImage} style={styles.userImage} />
+        <View>
+          <Text style={styles.userName}>Kim Nataliya</Text>
+          <Text style={styles.userEmail}>kim@gmail.com</Text>
+        </View>
+      </View>
+      <FlatList
+        style={styles.postsList}
+        showsVerticalScrollIndicator={false}
+        data={posts}
+        renderItem={({ item }) => <Post item={item} />}
+        keyExtractor={(item) => item.id}
+      />
+    </View>
   );
 };
 
