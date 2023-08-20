@@ -1,10 +1,17 @@
 import { Image, Text, View, StyleSheet } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
-import { Feather } from "@expo/vector-icons";
+import { Feather, AntDesign, Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
+import { useState } from "react";
 
-const Post = ({ item }) => {
+const ProfilePost = ({ item }) => {
+  const [likeColor, setLikeColor] = useState("#212121");
   const navigation = useNavigation();
+
+  const handleLikePress = () => {
+    const newColor = likeColor === "#212121" ? "#FF6C00" : "#212121";
+    setLikeColor(newColor);
+  };
 
   return (
     <View style={styles.wrapper}>
@@ -17,13 +24,17 @@ const Post = ({ item }) => {
             navigation.navigate("Comments");
           }}
         >
-          <Feather
-            name="message-circle"
+          <Ionicons
+            name="chatbubble-sharp"
             size={24}
-            color="#BDBDBD"
+            color="#FF6C00"
             style={{ transform: [{ scaleX: -1 }] }}
           />
           <Text style={styles.comments}>{item.comments}</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.link} onPress={handleLikePress}>
+          <AntDesign name="like2" size={24} color={likeColor} />
+          <Text style={styles.comments}>{item.likes}</Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.link}
@@ -47,7 +58,7 @@ const Post = ({ item }) => {
   );
 };
 
-export default Post;
+export default ProfilePost;
 
 const styles = StyleSheet.create({
   wrapper: {
@@ -81,7 +92,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     lineHeight: 19,
     fontWeight: "400",
-    color: "#BDBDBD",
+    color: "#212121",
   },
   description: {
     fontSize: 16,

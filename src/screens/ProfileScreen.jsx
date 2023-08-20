@@ -14,8 +14,9 @@ import {
 import userImage from "../images/userImage.png";
 import bcgImage from "../images/photoBground.jpg";
 import { AntDesign } from "@expo/vector-icons";
-import Post from "../components/Post";
+import ProfilePost from "../components/ProfilePost";
 import posts from "../shared/postsData.js";
+import { FlatList } from "react-native-gesture-handler";
 
 const ProfileScreen = () => {
   const navigation = useNavigation();
@@ -48,7 +49,7 @@ const ProfileScreen = () => {
           <Text style={styles.title}>Nataliya Kim</Text>
           <View style={styles.postsList}>
             {posts.map((item) => (
-              <Post item={item} key={item.id} />
+              <ProfilePost item={item} key={item.id} />
             ))}
           </View>
         </View>
