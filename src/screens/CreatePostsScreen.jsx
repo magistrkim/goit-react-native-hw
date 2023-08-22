@@ -1,9 +1,11 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { FontAwesome, Feather } from "@expo/vector-icons";
+import { Camera } from "expo-camera";
+import * as MediaLibrary from "expo-media-library";
+import { useNavigation } from "@react-navigation/native";
 import {
   View,
   Text,
-  KeyboardAvoidingView,
   StyleSheet,
   TouchableWithoutFeedback,
   TouchableOpacity,
@@ -15,26 +17,76 @@ import {
 const CreatePostsScreen = () => {
   const [postName, setPostName] = useState(null);
   const [locationName, setLocationName] = useState(null);
-  const [photoUrl, setPhotoUrl] = useState("");
+  const [postLocation, setPostLocation] = useState(null);
+  const [hasPermission, setHasPermission] = useState(null);
+  const [cameraRef, setCameraRef] = useState(null);
+  const [type, setType] = useState(Camera.Constants.Type.back);
+  const [photoUri, setPhotoUri] = useState("");
 
-  const isButtonDisabled = photoUrl;
+  const isButtonDisabled = photoUri;
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const { status } = await Camera.requestCameraPermissionsAsync();
+        await MediaLibrary.requestPermissionsAsync();
+        setHasPermission(status === "granted");
+      } catch (error) {
+        console.log(error);
+      }
+    })();
+    return handleReset;
+  }, []);
+
+  if (!hasPermission) {
+    return <Text>There is no access to camera</Text>;
+  }
+  const handleReset = () => {
+    setPostName(null);
+    setLocationName(null);
+    setPostLocation(null);
+    setPhotoUri("");
+  };
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <View style={styles.container}>
         <View>
-          <View style={styles.imageWrapper}>
-            <ImageBackground style={styles.image}>
-              <TouchableOpacity style={styles.cameraIconWrapper}>
-                <FontAwesome
-                  name="camera"
-                  size={22}
-                  color="#BDBDBD"
-                  style={styles.cameraIcon}
-                />
-              </TouchableOpacity>
-            </ImageBackground>
-          </View>
-          <Text style={styles.imageDescription}>Завантажте фото</Text>
+          <TouchableOpacity
+            style={styles.imageWrapper}
+            onPress={() => {
+              setType(
+                type === Camera.Constants.Type.back
+                  ? Camera.Constants.Type.front
+                  : Camera.Constants.Type.back
+              );
+            }}
+          >
+            <Camera type={type} ref={setCameraRef} style={{ flex: 1 }}>
+              <ImageBackground src={photoUri} style={styles.image}>
+                <TouchableOpacity
+                  style={styles.cameraIconWrapper}
+                  onPress={async () => {
+                    if (cameraRef) {
+                      const { uri } =
+                        await cameraRef.takePictureAsync();
+                      await MediaLibrary.createAssetAsync(uri);
+                      setPhotoUri(uri);
+                    }
+                  }}
+                >
+                  <FontAwesome
+                    name="camera"
+                    size={22}
+                    color="#BDBDBD"
+                    style={styles.cameraIcon}
+                  />
+                </TouchableOpacity>
+              </ImageBackground>
+            </Camera>
+          </TouchableOpacity>
+          <Text style={styles.imageDescription}>
+            {!photoUri ? "Завантажте фото" : "Редагувати фото"}
+          </Text>
           <TextInput
             placeholder="Назва..."
             style={styles.input}
@@ -70,7 +122,7 @@ const CreatePostsScreen = () => {
             </Text>
           </TouchableOpacity>
         </View>
-        <TouchableOpacity style={styles.removeBtn}>
+        <TouchableOpacity style={styles.removeBtn} onPress={handleReset}>
           <Feather name="trash-2" size={24} color="#BDBDBD" />
         </TouchableOpacity>
       </View>
@@ -101,6 +153,7 @@ const styles = StyleSheet.create({
   },
   image: {
     flex: 1,
+    backgroundColor: "transparent",
   },
   cameraIconWrapper: {
     position: "absolute",
