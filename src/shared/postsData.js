@@ -18,7 +18,7 @@ const posts = [
     likes: 290,
     postLocation: {
       latitude: 38.7804,
-      longitude: 9.4991,
+      longitude: -9.4991,
     },
     description: "Lisbon, Portugal",
     url: require("../images/image5.jpg"),

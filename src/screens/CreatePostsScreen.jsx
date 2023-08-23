@@ -22,9 +22,14 @@ const CreatePostsScreen = () => {
   const [cameraRef, setCameraRef] = useState(null);
   const [type, setType] = useState(Camera.Constants.Type.back);
   const [photoUri, setPhotoUri] = useState("");
+  const navigation = useNavigation();
 
-  const isButtonDisabled = photoUri;
-
+  const newPostData = {
+    postName: postName || "Без назви",
+    locationName: locationName || "Без назви",
+    postLocation,
+    photoUri,
+  };
   useEffect(() => {
     (async () => {
       try {
@@ -41,12 +46,29 @@ const CreatePostsScreen = () => {
   if (!hasPermission) {
     return <Text>There is no access to camera</Text>;
   }
+  const handleSubmit = async () => {
+    if (!photoUri) {
+      setPhotoUri("");
+      return;
+    }
+    if (!postLocation) {
+      try {
+      } catch (error) {
+        console.log(error);
+      }
+      return;
+    }
+    console.log(newPostData);
+    navigation.navigate("Posts");
+    handleReset();
+  };
   const handleReset = () => {
     setPostName(null);
     setLocationName(null);
     setPostLocation(null);
     setPhotoUri("");
   };
+  const isButtonDisabled = photoUri;
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <View style={styles.container}>
@@ -67,8 +89,7 @@ const CreatePostsScreen = () => {
                   style={styles.cameraIconWrapper}
                   onPress={async () => {
                     if (cameraRef) {
-                      const { uri } =
-                        await cameraRef.takePictureAsync();
+                      const { uri } = await cameraRef.takePictureAsync();
                       await MediaLibrary.createAssetAsync(uri);
                       setPhotoUri(uri);
                     }
@@ -108,7 +129,7 @@ const CreatePostsScreen = () => {
             />
           </View>
           <TouchableOpacity
-            onPress={() => {}}
+            onPress={handleSubmit}
             style={[styles.publishBtn, isButtonDisabled && styles.enableBtn]}
             disabled={!isButtonDisabled}
           >
