@@ -1,7 +1,8 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { FontAwesome, Feather } from "@expo/vector-icons";
 import { Camera } from "expo-camera";
 import * as MediaLibrary from "expo-media-library";
+import * as Location from "expo-location";
 import { useNavigation } from "@react-navigation/native";
 import {
   View,
@@ -23,6 +24,25 @@ const CreatePostsScreen = () => {
   const [type, setType] = useState(Camera.Constants.Type.back);
   const [photoUri, setPhotoUri] = useState("");
   const navigation = useNavigation();
+
+useEffect(() => {
+  (async () => {
+    try {
+      let { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== "granted") {
+        console.log("Permission to access location was denied");
+      }
+      let location = await Location.getCurrentPositionAsync();
+      const coords = {
+        latitude: location.coords.latitude,
+        longitude: location.coords.longitude,
+      };
+      setPostLocation(coords);
+    } catch (error) {
+      console.log(error);
+    }
+  })();
+}, [photoUri]);
 
   const newPostData = {
     postName: postName || "Без назви",

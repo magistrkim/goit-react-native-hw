@@ -1,7 +1,7 @@
 import { View, Text, StyleSheet, Dimensions } from "react-native";
 import { useState, useEffect } from "react";
 import MapView, { Marker } from "react-native-maps";
-import * as Location from "expo-location";
+// import * as Location from "expo-location";
 import { useRoute } from "@react-navigation/native";
 
 const MapsScreen = () => {
@@ -24,7 +24,6 @@ const MapsScreen = () => {
           longitudeDelta: 0.0421,
         }}
         mapType="standard"
-        // minZoomLevel={15}
         showUserLocation={true}
       >
         {location && (
