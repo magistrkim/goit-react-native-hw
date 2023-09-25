@@ -4,6 +4,7 @@ import { Camera } from "expo-camera";
 import * as MediaLibrary from "expo-media-library";
 import * as Location from "expo-location";
 import { useNavigation } from "@react-navigation/native";
+import Loader from "../components/Loader";
 import {
   View,
   Text,
@@ -23,26 +24,27 @@ const CreatePostsScreen = () => {
   const [cameraRef, setCameraRef] = useState(null);
   const [type, setType] = useState(Camera.Constants.Type.back);
   const [photoUri, setPhotoUri] = useState("");
+  const [isTakingPicture, setIsTakingPicture] = useState(false);
   const navigation = useNavigation();
 
-useEffect(() => {
-  (async () => {
-    try {
-      let { status } = await Location.requestForegroundPermissionsAsync();
-      if (status !== "granted") {
-        console.log("Permission to access location was denied");
+  useEffect(() => {
+    (async () => {
+      try {
+        let { status } = await Location.requestForegroundPermissionsAsync();
+        if (status !== "granted") {
+          console.log("Permission to access location was denied");
+        }
+        let location = await Location.getCurrentPositionAsync();
+        const coords = {
+          latitude: location.coords.latitude,
+          longitude: location.coords.longitude,
+        };
+        setPostLocation(coords);
+      } catch (error) {
+        console.log(error);
       }
-      let location = await Location.getCurrentPositionAsync();
-      const coords = {
-        latitude: location.coords.latitude,
-        longitude: location.coords.longitude,
-      };
-      setPostLocation(coords);
-    } catch (error) {
-      console.log(error);
-    }
-  })();
-}, [photoUri]);
+    })();
+  }, [photoUri]);
 
   const newPostData = {
     postName: postName || "Без назви",
@@ -66,6 +68,20 @@ useEffect(() => {
   if (!hasPermission) {
     return <Text>There is no access to camera</Text>;
   }
+  const handlePictureTaking = async () => {
+    if (cameraRef && !isTakingPicture) {
+      setIsTakingPicture(true);
+      try {
+        const { uri } = await cameraRef.takePictureAsync();
+        await MediaLibrary.createAssetAsync(uri);
+        setPhotoUri(uri);
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setIsTakingPicture(false);
+      }
+    }
+  };
   const handleSubmit = async () => {
     if (!photoUri) {
       setPhotoUri("");
@@ -79,7 +95,7 @@ useEffect(() => {
       return;
     }
     console.log(newPostData);
-    navigation.navigate("Posts");
+    navigation.goBack();
     handleReset();
   };
   const handleReset = () => {
@@ -107,20 +123,19 @@ useEffect(() => {
               <ImageBackground src={photoUri} style={styles.image}>
                 <TouchableOpacity
                   style={styles.cameraIconWrapper}
-                  onPress={async () => {
-                    if (cameraRef) {
-                      const { uri } = await cameraRef.takePictureAsync();
-                      await MediaLibrary.createAssetAsync(uri);
-                      setPhotoUri(uri);
-                    }
-                  }}
+                  onPress={handlePictureTaking}
+                  disabled={isTakingPicture}
                 >
-                  <FontAwesome
-                    name="camera"
-                    size={22}
-                    color="#BDBDBD"
-                    style={styles.cameraIcon}
-                  />
+                  {isTakingPicture ? (
+                    <Loader />
+                  ) : (
+                    <FontAwesome
+                      name="camera"
+                      size={22}
+                      color="#BDBDBD"
+                      style={styles.cameraIcon}
+                    />
+                  )}
                 </TouchableOpacity>
               </ImageBackground>
             </Camera>
