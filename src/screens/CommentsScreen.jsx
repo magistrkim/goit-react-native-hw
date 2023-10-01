@@ -8,17 +8,24 @@ import {
   TouchableOpacity,
   TouchableWithoutFeedback,
   Keyboard,
+  FlatList,
 } from "react-native";
+import { useRoute } from "@react-navigation/native";
 import SendIcon from "../../assets/send.png";
+
 const CommentsScreen = () => {
+  const route = useRoute();
+  const imageUrl = route.params.imageUrl;
+
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <View style={styles.container}>
         <View style={styles.imageWrapper}>
-          <Image style={styles.image} />
+          <Image style={styles.image} source={imageUrl} />
         </View>
         <KeyboardAvoidingView
           behavior={Platform.OS === "ios" ? "padding" : "height"}
+          keyboardVerticalOffset={100}
         >
           <View style={styles.inputWrapper}>
             <TextInput
@@ -47,14 +54,14 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
   },
   imageWrapper: {
-    width: "100%",
-    height: 240,
     borderRadius: 8,
-    borderWidth: 1,
-    borderColor: "#E8E8E8",
     backgroundColor: "#f6f6f6",
     marginBottom: 8,
     overflow: "hidden",
+  },
+  image: {
+    width: "100%",
+    height: 240,
   },
   inputWrapper: {
     width: "100%",
@@ -64,12 +71,9 @@ const styles = StyleSheet.create({
     backgroundColor: "transparent",
   },
   input: {
-    position: "relative",
     width: "100%",
     height: 50,
     padding: 16,
-    marginTop: "auto",
-    marginBottom: "auto",
     borderRadius: 50,
     backgroundColor: "#F6F6F6",
     borderWidth: 1,

@@ -14,7 +14,7 @@ const Post = ({ item }) => {
         <TouchableOpacity
           style={styles.link}
           onPress={() => {
-            navigation.navigate("Comments");
+            navigation.navigate("Comments", { imageUrl: item.url });
           }}
         >
           <Feather
